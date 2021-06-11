@@ -9,71 +9,75 @@
 
 #include <Servo.h>
 
-typedef struct _servoMove {
+typedef struct _servoMove
+{
   int pos;
   int dur;
 } ServoMove;
 
 // t:current time, b:beginning value, c:change in value, d: duration
-// t can be in frames or seconds/milliseconds
+// t and d can be in frames or seconds/milliseconds
 typedef float (*ServoFunc)(float t, float b, float c, float d);
 
-class Tactor {
-  private:
-    Servo *servo;
-    int frameMillis;
+class Tactor
+{
+private:
+  Servo *servo;
+  int frameMillis;
 
-    float startPos;
-    float currPos;
-    float deltaPos;
+  float startPos;
+  float currPos;
+  float deltaPos;
 
-    unsigned long startMillis;
-    unsigned long durMillis;
+  unsigned long startMillis;
+  unsigned long durMillis;
 
-    unsigned long lastMillis;
+  unsigned long lastMillis;
 
-    boolean running;
-    boolean arrived;
-    boolean direction;
+  ServoFunc servoFunc;
 
-    boolean useMicros;
+  boolean running;
+  boolean arrived;
+  boolean direction;
 
-    int statusPin;
-    boolean active;
+  boolean useMicros;
 
-    int angleToMicros(float angle);
+  int statusPin;
+  boolean active;
 
-    uint8_t min;
-    uint8_t max;
+  int angleToMicros(float angle);
 
-  public:
-    void begin(Servo& s, int frameTime, int indicator);
-    void reset();
+  uint8_t min;
+  uint8_t max;
 
-    void activate();
-    void deactivate();
+public:
+  void begin(Servo &s, int frameTime, int indicator);
+  void reset();
 
-    void moveTo(int pos, int durMillis);
+  void activate();
+  void deactivate();
 
-    float getCurrPos();
+  void moveTo(int pos, int durMillis);
 
-    void update();
+  float getCurrPos();
 
-    void setServoFunc(ServoFunc);
+  void update();
 
-    boolean hasArrived();
-    boolean isRunning();
+  void setServoFunc(ServoFunc);
 
-    void start();
-    void stop();
+  boolean hasArrived();
+  boolean isRunning();
 
-    void setDirection(boolean dir);
-    boolean getDirection();
+  void start();
+  void stop();
 
-    void setMinMaxMicroseconds(int mi, int ma);
+  void setDirection(boolean dir);
+  boolean getDirection();
 
-    void useMicroseconds(boolean t);
-    boolean usingMicroseconds();
+  void setMinMaxMicroseconds(int mi, int ma);
+
+  void useMicroseconds(boolean t);
+  boolean usingMicroseconds();
 }
 
 #endif
