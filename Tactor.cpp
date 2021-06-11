@@ -1,7 +1,7 @@
 #include "Tactor.h"
 #include <math.h>
 
-#define DEBUG 0
+#define DEBUG 1
 
 #if (DEBUG > 0)
 #define debug_update(){                                 \
@@ -16,53 +16,48 @@
         Serial.print(" arrived:");                      \
         Serial.println(((arrived) ? "true" : "false")); \
     }
-#define debug_getnextpos() {           \
-        Serial.print("getNextPos:");   \
-        Serial.print(movesIndex);      \
-        Serial.print(" deltaPos:");    \
-        Serial.print(deltaPos);        \
-        Serial.print(" durMillis:");   \
-        Serial.print(durMillis);       \
-        Serial.print(" startMillis:"); \
-        Serial.println(startMillis);   \
+#define debug_reset() {                                 \
+        Serial.print("reset: currPos:");                \
+        Serial.print(currPos);                          \
+        Serial.print(" deltaPos:");                     \
+        Serial.print(deltaPos);                         \
+        Serial.print(" durMillis:");                    \
+        Serial.print(durMillis);                        \
+        Serial.print(" startMillis:");                  \
+        Serial.print(startMillis);                      \
+        Serial.print(" active:");                       \
+        Serial.println(((active) ? "true" : "false"));  \
     }
-#define debug_reset() {                  \
-        Serial.print("reset: currPos:"); \
-        Serial.print(currPos);           \
-        Serial.print(" deltaPos:");      \
-        Serial.print(deltaPos);          \
-        Serial.print(" durMillis:");     \
-        Serial.print(durMillis);         \
-        Serial.print(" startMillis:");   \
-        Serial.println(startMillis); }
 #else
 #define debug_update() {}
-#define debug_getnextpos() {}
 #define debug_reset() {}
 #endif
 
 // default movement function
 // t: current time, b: beginning value, c: change in value, d: duration
 // t and d can be in frames or seconds/milliseconds
-void basicMoveFunction(float t, float b, float c, float d)
+float basicMoveFunction(float t, float b, float c, float d)
 {
-    if ((t/=d/2) < 1) return c/2*t*t*t + b;
-	return c/2*((t-=2)*t*t + 2) + b;
+    return b+(c/d*t);
 }
 
-void Tactor::begin(Servo &s, int frameTime, int indicator)
+void Tactor::begin(Servo &s, int frameTime, float initPos, int indicator)
 {
     servo = &s;
     frameMillis = frameTime;
+    startPos = initPos;
 
     direction = false;
     arrived = true;
+
+    active = false;
 
     servoFunc = basicMoveFunction;
 
     statusPin = indicator;
     pinMode(statusPin, OUTPUT);
-
+    digitalWrite(statusPin, LOW);
+    
     reset();
 }
 
@@ -82,6 +77,7 @@ void Tactor::reset()
 {
     if (servo)
     {
+        servo->write(startPos);
         currPos = servo->read();
     }
 
@@ -121,16 +117,18 @@ void Tactor::update()
         if (currentMillis > (startMillis + durMillis))
         {
             currPos = startPos + deltaPos;
+            arrived = true;
         }
         else
         {
             currPos = servoFunc(currentMillis - startMillis, startPos, deltaPos, durMillis);
+            arrived = (currPos == startPos + deltaPos) ? true : false;
         }
 
         debug_update();
 
         float p = (direction) ? 180.0 - currPos : currPos;
-        if (servo && active)
+        if (servo)
             if (useMicros)
                 servo->writeMicroseconds(angleToMicros(p));
             else

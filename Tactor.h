@@ -28,6 +28,7 @@ private:
   float startPos;
   float currPos;
   float deltaPos;
+  float initPos;
 
   unsigned long startMillis;
   unsigned long durMillis;
@@ -51,7 +52,7 @@ private:
   uint8_t max;
 
 public:
-  void begin(Servo &s, int frameTime, int indicator);
+  void begin(Servo &s, int frameTime, float initPos, int indicator);
   void reset();
 
   void activate();
