@@ -44,6 +44,7 @@ myTactor.moveTo(int position, int duration);
 myTactor.getCurrPos(); //returns current position (int)
 ```
 ```position``` : in degrees where tactor needs to move.
+
 ```duration``` : in what time tactor need to finish movement.
 
 ### Start/ Stop Tactor
