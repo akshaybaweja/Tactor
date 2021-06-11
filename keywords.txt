@@ -7,7 +7,7 @@
 #######################################
 
 ServoMove	KEYWORD1
-Tactor      KEYWORD1
+Tactor	KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)
@@ -30,7 +30,6 @@ usingMicroseconds	KEYWORD2
 setDirection	KEYWORD2
 getDirection	KEYWORD2
 
-#
 #######################################
 # Constants (LITERAL1)
 #######################################

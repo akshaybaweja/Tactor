@@ -44,7 +44,7 @@
 // default movement function
 // t: current time, b: beginning value, c: change in value, d: duration
 // t and d can be in frames or seconds/milliseconds
-void Tactor::basicMoveFunction(float t, float b, float c, float d)
+void basicMoveFunction(float t, float b, float c, float d)
 {
     if ((t/=d/2) < 1) return c/2*t*t*t + b;
 	return c/2*((t-=2)*t*t + 2) + b;

@@ -78,6 +78,6 @@ public:
 
   void useMicroseconds(boolean t);
   boolean usingMicroseconds();
-}
+};
 
 #endif
