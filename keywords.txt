@@ -1,0 +1,36 @@
+#######################################
+# Syntax Coloring Map For Tactor
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+ServoMove	KEYWORD1
+Tactor      KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+begin	KEYWORD2
+reset	KEYWORD2
+setMinMaxMicroseconds	KEYWORD2
+moveTo	KEYWORD2
+update	KEYWORD2
+start	KEYWORD2
+stop	KEYWORD2
+activate	KEYWORD2
+deactivate	KEYWORD2
+setServoFunc	KEYWORD2
+hasArrived	KEYWORD2
+isRunning	KEYWORD2
+useMicroseconds	KEYWORD2
+usingMicroseconds	KEYWORD2
+setDirection	KEYWORD2
+getDirection	KEYWORD2
+
+#
+#######################################
+# Constants (LITERAL1)
+#######################################
