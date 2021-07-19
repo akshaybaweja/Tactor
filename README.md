@@ -46,7 +46,7 @@ myTactor.getCurrPos(); //returns current position (int)
 ```
 ```position``` : in degrees where tactor needs to move.
 
-```duration``` : in what time tactor need to finish movement.
+```duration``` : in what time tactor need to finish movement.(in ms)
 
 ### Start/ Stop Tactor
 ```Arduino
@@ -57,7 +57,7 @@ myTactor.stop(); //stop the tactor
 
 ### Direction Control
 ```Arduino
-myTactor.setDirection(bool direction); //activate the tactor
+myTactor.setDirection(bool direction); //true: towards, false: fromwards
 
 myTactor.getDirection(); //returns direction (bool)
 ```
