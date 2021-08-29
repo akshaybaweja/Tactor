@@ -4,6 +4,7 @@
 * Download as ```.zip``` from GitHub
 * Unzip and rename folder to ```Tactor```
 * Place ```Tactor``` folder in your ```Arduino Libraries``` folder
+* If needed rename the folder from ```Tactor-main``` to ```Tactor```
 
 ## API
 ### Initialize Instance
